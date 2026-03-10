@@ -4,7 +4,9 @@ This is the official implementation for the paper "Agent Neuro-Symbolique pour l
 
 # Usage
 ```bash
-git clone https://github.com/nlp-uoregon/meci-dataset.git data/MECI
+conda env create -f environment.yml
+conda activate agenteci
+git clone https://github.com/nlp-uoregon/meci-dataset.git
 ```
 
 ## Dataprep
