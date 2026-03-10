@@ -22,7 +22,7 @@ python3 -m data.MECI_dataprep \
   --test_size 0.1 \
   --repo_id your_account/your_repo   
 
-python3 -m data.dataprep_llm_format --dataset account/your_repo
+python3 -m data.dataprep_llm_format --dataset your_account/your_repo
 ```
 
 ## Launch the test (Check/Modify the config first)
