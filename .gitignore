@@ -7,6 +7,7 @@ runs_summary.xlsx
 id_run*
 reconstitute_per_lang_from_logs.py
 summary.py
+data/MECI/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
