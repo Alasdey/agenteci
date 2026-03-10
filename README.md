@@ -8,6 +8,7 @@ git clone https://github.com/nlp-uoregon/meci-dataset.git data/MECI
 ```
 
 ## Dataprep
+Replace your_account/your_repo with your huggingface repository path of choice 
 ```bash
 read -s -r -p "Enter your Hugging Face token: " HF_TOKEN
 export HF_TOKEN
@@ -23,6 +24,7 @@ python3 -m data.dataprep_llm_format --dataset account/your_repo
 ```
 
 ## Launch the test (Check/Modify the config first)
+Replace your_account/your_repo with your huggingface repository path of choice
 ```bash
 read -s -r -p "Enter your Open Router API key: " OPENROUTER_API_KEY
 export OPENROUTER_API_KEY
