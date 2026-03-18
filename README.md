@@ -9,7 +9,7 @@ conda activate agenteci
 ```
 
 ## Dataprep
-Replace your_account/your_repo with your huggingface repository path of choice 
+Replace YOUR_ACCOUNT/YOUR_REPO with your huggingface repository path of choice 
 ```bash
 read -s -r -p "Enter your Hugging Face token: " HF_TOKEN
 export HF_TOKEN
@@ -21,18 +21,18 @@ python3 -m data.MECI_dataprep \
   --exclude 1_10ecbplus.xml \
   --seed 42 \
   --test_size 0.1 \
-  --repo_id your_account/your_repo   
+  --repo_id YOUR_ACCOUNT/YOUR_REPO
 
-python3 -m data.dataprep_llm_format --dataset your_account/your_repo
+python3 -m data.dataprep_llm_format --dataset YOUR_ACCOUNT/YOUR_REPO
 ```
 
 ## Launch the test (Check/Modify the config first)
-Replace your_account/your_repo with your huggingface repository path of choice
+Replace YOUR_ACCOUNT/YOUR_REPO with your huggingface repository path of choice
 ```bash
 read -s -r -p "Enter your Open Router API key: " OPENROUTER_API_KEY
 export OPENROUTER_API_KEY
 read -s -r -p "Enter your Langsmith API key: " LANGCHAIN_API_KEY
 export LANGCHAIN_API_KEY
 
-python3 main.py --repo_id your_account/your_repo 
+python3 main.py --repo_id YOUR_ACCOUNT/YOUR_REPO
 ```
