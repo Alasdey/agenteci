@@ -6,7 +6,6 @@ This is the official implementation for the paper "Agent Neuro-Symbolique pour l
 ```bash
 conda env create -f environment.yml
 conda activate agenteci
-git clone https://github.com/nlp-uoregon/meci-dataset.git
 ```
 
 ## Dataprep
@@ -14,6 +13,8 @@ Replace your_account/your_repo with your huggingface repository path of choice
 ```bash
 read -s -r -p "Enter your Hugging Face token: " HF_TOKEN
 export HF_TOKEN
+
+git clone https://github.com/nlp-uoregon/meci-dataset.git
 
 python3 -m data.MECI_dataprep \
   --root_dir data/MECI/meci-v0.1-public \
