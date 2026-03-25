@@ -1,6 +1,7 @@
 # OpenRouter + model routing
 openrouter_base_url: "https://openrouter.ai/api/v1"     # OpenAI-compatible endpoint
-model: "mistralai/mistral-small-3.2-24b-instruct"
+# model: "mistralai/mistral-small-3.2-24b-instruct"
+model: "nvidia/nemotron-3-nano-30b-a3b"
 # model: "deepseek/deepseek-v3.2"                       # any OpenRouter model id works
 # model: "openai/gpt-5-mini"                            # any OpenRouter model id works
 temperature: 0
@@ -40,8 +41,8 @@ inference:
 
 # Resampling configuration
 resampling:
-  enabled: True
-  n_runs: 3  # Number of independent predictions per document batch
+  enabled: False
+  n_runs:   # Number of independent predictions per document batch
   aggregation: "majority_vote" 
   tie_breaking: "norel" # "random": random selection for ties
   parallel_execution: true  # Run predictions in parallel
