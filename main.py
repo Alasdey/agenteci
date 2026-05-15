@@ -41,9 +41,38 @@ ROOT = Path(__file__).resolve().parent
 CONFIG = yaml.safe_load((ROOT / "config.yaml").read_text(encoding="utf-8"))
 NO_TOOLS = bool(CONFIG.get("tools", {}).get("no_tools", False))
 
-# ---- LangSmith v2 tracing (env) ----
-os.environ.setdefault("LANGSMITH_TRACING", "true")
+
+# ---- Local trace sink (replaces LangSmith cloud) ----
+import threading
+import http.server
+from datetime import datetime
+
+_TRACE_LOG = Path("logs") / f"traces_{datetime.now():%Y%m%d_%H%M%S}.jsonl"
+_TRACE_LOG.parent.mkdir(parents=True, exist_ok=True)
+
+class _TraceSink(http.server.BaseHTTPRequestHandler):
+    def do_POST(self):
+        length = int(self.headers.get("Content-Length", 0))
+        body = self.rfile.read(length)
+        with _TRACE_LOG.open("ab") as f:
+            f.write(body.strip() + b"\n")
+        self.send_response(202)
+        self.end_headers()
+    def log_message(self, *_):  # suppress access logs
+        pass
+
+def _start_sink(port: int = 9999):
+    srv = http.server.HTTPServer(("127.0.0.1", port), _TraceSink)
+    t = threading.Thread(target=srv.serve_forever, daemon=True)
+    t.start()
+
+_start_sink(port=9999)
+# --------------------------------------------------------
+
+os.environ["LANGSMITH_TRACING"] = "true"
 os.environ["LANGSMITH_PROJECT"] = CONFIG["langsmith_project"]
+os.environ["LANGSMITH_ENDPOINT"] = "http://127.0.0.1:9999"   # ← redirect here
+os.environ["LANGSMITH_API_KEY"] = "local-no-op"              # ← dummy key
 
 print("Config loaded")
 
@@ -372,7 +401,7 @@ async def predict_meci_hf_async_with_resampling(
         
         if not enable_resampling:
             # Fall back to single prediction
-            result = await run_single_batch(doc_idx, batch_idx, doc_text, spans, batch, lang)
+            result = await run_single_batch_independent(doc_idx, 0, batch_idx, doc_text, spans, batch, lang)
             # result is expected to be (doc_idx, lang, y_true, y_pred)
             # Build per-pair rows with minimal diagnostics
             _doc_idx, _lang, y_true, y_pred = result

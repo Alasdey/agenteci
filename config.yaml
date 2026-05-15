@@ -20,15 +20,11 @@ paths:
 tools:
   # Disable all tool binding and the ToolNode.
   # Enables use of any chat model without tool-calling support.
-  no_tools: False
+  no_tools: True
   enabled:
-    # - placeholder_tool
-    - coherence_check
-    - counterfactual_pairs
-    # - thinker
-    # - critic
-    # - summarizer
-    # - worker
+    - placeholder_tool
+    # - coherence_check
+    # - counterfactual_pairs
 
 # Inference / bootstrap behavior
 inference:
@@ -42,7 +38,7 @@ inference:
 # Resampling configuration
 resampling:
   enabled: False
-  n_runs:   # Number of independent predictions per document batch
+  n_runs: 1  # Number of independent predictions per document batch
   aggregation: "majority_vote" 
   tie_breaking: "norel" # "random": random selection for ties
   parallel_execution: true  # Run predictions in parallel
